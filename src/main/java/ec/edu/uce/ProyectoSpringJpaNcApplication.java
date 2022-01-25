@@ -94,8 +94,12 @@ public class ProyectoSpringJpaNcApplication implements CommandLineRunner {
 	
 //		Guardia g5 = this.guardiaService.buscarGuardiaPorApellidoListaTyped("Teran");
 	
-		Guardia g5 = this.guardiaService.buscarGuardiaPorApellidoListaNamed("Teran");
-		LOG.info("El guardia es: " + g5);
+//		Guardia g6 = this.guardiaService.buscarGuardiaPorApellidoListaNamed("Teran");
+//		LOG.info("El guardia es: " + g5);
+		
+		Guardia g7 = this.guardiaService.buscarGuardiaPorApellidoNative("Teran");
+		LOG.info(g7.toString());
+		
 	}
 
 }

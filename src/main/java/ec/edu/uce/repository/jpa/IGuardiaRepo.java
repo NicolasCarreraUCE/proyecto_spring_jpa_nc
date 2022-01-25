@@ -17,4 +17,7 @@ public interface IGuardiaRepo {
 	Guardia buscarGuardiaPorApellidoType(String apellido);
 	
 	Guardia buscarGuardiaPorApellidoNamed(String apellido);
+	
+	Guardia buscarGuardiaPorApellidoNative(String apellido);
+	
 }
