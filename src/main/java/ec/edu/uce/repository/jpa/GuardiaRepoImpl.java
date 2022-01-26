@@ -1,10 +1,15 @@
 package ec.edu.uce.repository.jpa;
 
+import java.util.function.Predicate;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -113,6 +118,74 @@ public class GuardiaRepoImpl implements IGuardiaRepo {
 		Query miQuery = this.entityManager.createNativeQuery("select * from guardia g where g.apellido=:valor",Guardia.class);
 		miQuery.setParameter("valor", apellido);
 		return (Guardia) miQuery.getSingleResult();
+	}
+
+	@Override
+	public Guardia buscarGuardiaPorApellidoNamedNative(String apellido) {
+		// TODO Auto-generated method stub
+		Query miQuery = entityManager.createNamedQuery("Guardia.buscarPorApellidoNative", Guardia.class);
+		miQuery.setParameter("valor", apellido);
+		return (Guardia) miQuery.getSingleResult();
+	}
+
+	@Override
+	public Guardia buscarGuardiaPorApellidoCiteriAPI(String apellido) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder miCriteria = this.entityManager.getCriteriaBuilder(); // como va a trabajar
+		CriteriaQuery<Guardia> miQuery = miCriteria.createQuery(Guardia.class); // resultadi del Query
+		
+		// select * from Tabla where
+		// Aquei se empieza a construir el SQL
+		Root<Guardia> miTabla = miQuery.from(Guardia.class);  
+		// Los WHERE  en criteria API se los conoce como Predicado
+		javax.persistence.criteria.Predicate p1 = miCriteria.equal(miTabla.get("apellido"), apellido);
+		
+		// empesamos a confromar el select
+		miQuery.select(miTabla).where(p1);
+		
+		TypedQuery<Guardia> typedQuery = this.entityManager.createQuery(miQuery);
+		return typedQuery.getSingleResult();
+	}
+
+	@Override
+	public Guardia buscarGuardiaPorApellidoCiteriAPIAnd(String apellido, String edificio) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder miCriteria = this.entityManager.getCriteriaBuilder(); // como va a trabajar
+		CriteriaQuery<Guardia> miQuery = miCriteria.createQuery(Guardia.class); // resultadi del Query
+		
+		// select * from Tabla where
+		// Aquei se empieza a construir el SQL
+		Root<Guardia> miTabla = miQuery.from(Guardia.class);  
+		// Los WHERE  en criteria API se los conoce como Predicado
+		javax.persistence.criteria.Predicate p1 = miCriteria.equal(miTabla.get("apellido"), apellido);
+		javax.persistence.criteria.Predicate p2 = miCriteria.equal(miTabla.get("edificio"), edificio);
+		
+		// empesamos a confromar el select
+		miQuery.select(miTabla).where(p1,p2); // aplica en and por defecto
+		
+		TypedQuery<Guardia> typedQuery = this.entityManager.createQuery(miQuery);
+		return typedQuery.getSingleResult();
+	}
+
+	@Override
+	public Guardia buscarGuardiaPorApellidoCiteriAPIOr(String apellido, String edificio) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder miCriteria = this.entityManager.getCriteriaBuilder(); // como va a trabajar
+		CriteriaQuery<Guardia> miQuery = miCriteria.createQuery(Guardia.class); // resultadi del Query
+		
+		// select * from Tabla where
+		// Aquei se empieza a construir el SQL
+		Root<Guardia> miTabla = miQuery.from(Guardia.class);  
+		// Los WHERE  en criteria API se los conoce como Predicado
+		javax.persistence.criteria.Predicate p1 = miCriteria.equal(miTabla.get("apellido"), apellido);
+		javax.persistence.criteria.Predicate p2 = miCriteria.equal(miTabla.get("edificio"), edificio);
+		javax.persistence.criteria.Predicate predicadoFinal = miCriteria.or(p1,p2);
+		
+		// empesamos a confromar el select
+		miQuery.select(miTabla).where(predicadoFinal);
+		
+		TypedQuery<Guardia> typedQuery = this.entityManager.createQuery(miQuery);
+		return typedQuery.getSingleResult();
 	}
 	
 }

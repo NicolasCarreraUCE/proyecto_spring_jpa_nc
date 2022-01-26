@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 @Table(name="guardia") // Este es absolulamente nesesarioo cuando la tabla tiene un nombre diferente
 // Aqui se declara los NamedQuery de Guardia
 @NamedQuery(name = "Guardia.buscarPorApellido", query = "select g from Guardia g where g.apellido=:valor")
+@NamedNativeQuery(name = "Guardia.buscarPorApellidoNative", query = "select * from guardia g where g.apellido=:valor", resultClass = Guardia.class)
 public class Guardia {
 
 	@Id // Define la clave primaria
