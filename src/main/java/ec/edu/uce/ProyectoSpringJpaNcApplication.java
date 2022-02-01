@@ -1,5 +1,11 @@
 package ec.edu.uce;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +15,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import ec.edu.uce.modelo.Paciente;
 import ec.edu.uce.modelo.Receta;
+import ec.edu.uce.modelo.jpa.DetalleFactura;
+import ec.edu.uce.modelo.jpa.Factura;
 import ec.edu.uce.modelo.jpa.Guardia;
 import ec.edu.uce.service.GestorCitaServiceImpl;
+import ec.edu.uce.service.IFacturaService;
 import ec.edu.uce.service.IGestorCitaService;
 import ec.edu.uce.service.IGuardiaService;
 import ec.edu.uce.service.IPacienteService;
@@ -28,6 +37,9 @@ public class ProyectoSpringJpaNcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private IGuardiaService guardiaService;
+	
+	@Autowired
+	private IFacturaService facturaService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoSpringJpaNcApplication.class, args);
@@ -104,12 +116,40 @@ public class ProyectoSpringJpaNcApplication implements CommandLineRunner {
 	
 //		Guardia g9 = this.guardiaService.buscarGuardiaPorApellidoCiteriAPI("Teran");
 //		LOG.info(g9.toString());
+//		
+//		Guardia g10 = this.guardiaService.buscarGuardiaPorApellidoCiteriAPIAnd("Teran","Villaflora");
+//		LOG.info(g10.toString());
+//		
+//		Guardia g11 = this.guardiaService.buscarGuardiaPorApellidoCiteriAPIOr("Teran","Edificio 1");
+//		LOG.info(g11.toString());
 		
-		Guardia g10 = this.guardiaService.buscarGuardiaPorApellidoCiteriAPIAnd("Teran","Villaflora");
-		LOG.info(g10.toString());
+		// Factura
+		Factura miFactura = new Factura();
+		miFactura.setCedula("1727450684");
+		miFactura.setNumero("0001-2345-8601");
+		LocalDateTime miFecha = LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45);
+		miFactura.setFecha(miFecha);
 		
-		Guardia g11 = this.guardiaService.buscarGuardiaPorApellidoCiteriAPIOr("Teran","Edificio 1");
-		LOG.info(g11.toString());
+		// Datalles
+		List<DetalleFactura> detalles = new ArrayList<>();
+		
+		// Primer detalle
+		DetalleFactura d1 = new DetalleFactura();
+		d1.setCantidad(2);
+		d1.setPrecio(new BigDecimal(2.75));
+		d1.setFactura(miFactura);
+		
+		DetalleFactura d2 = new DetalleFactura();
+		d2.setCantidad(10);
+		d2.setPrecio(new BigDecimal(10.50));
+		d2.setFactura(miFactura);
+		
+		detalles.add(d1);
+		detalles.add(d2);
+		
+		miFactura.setDetalles(detalles);
+		
+		this.facturaService.insertarFactura(miFactura);
 	}
 
 }
