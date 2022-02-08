@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -160,22 +161,32 @@ public class ProyectoSpringJpaNcApplication implements CommandLineRunner {
 //		miFactura.setDetalles(detalles);
 //		
 //		this.facturaService.insertarFactura(miFactura);
+//		
+//		
+//		Empleado empleado = new Empleado();
+//		empleado.setSalario(new BigDecimal(100.0));
+//		empleado.setIess("qwe");
+//		
+//		
+//		Ciudadano ciudadano = new Ciudadano();
+//		ciudadano.setNombre("Nicolas");
+//		ciudadano.setApellido("Carrera");
+//		
+//		empleado.setCiudadano(ciudadano);
+//		
+//		ciudadano.setEmpleado(empleado);
+//		
+//		this.ciudadanoRepo.insertarCiudadano(ciudadano);
+	
+		List<Factura> listaFactura = this.facturaService.buscarPorFechaJOIN(LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));
+	
+		List<Factura> listaFacturaL = this.facturaService.buscarPorFechaJOINLEFT(LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));	
 		
+		List<Factura> listaFacturaW = this.facturaService.buscarPorFechaWHERE(LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));	
 		
-		Empleado empleado = new Empleado();
-		empleado.setSalario(new BigDecimal(100.0));
-		empleado.setIess("qwe");
-		
-		
-		Ciudadano ciudadano = new Ciudadano();
-		ciudadano.setNombre("Nicolas");
-		ciudadano.setApellido("Carrera");
-		
-		empleado.setCiudadano(ciudadano);
-		
-		ciudadano.setEmpleado(empleado);
-		
-		this.ciudadanoRepo.insertarCiudadano(ciudadano);
+		for(Factura factura : listaFacturaW) {
+			LOG.info(factura.toString());
+		}
 	}
 
 }

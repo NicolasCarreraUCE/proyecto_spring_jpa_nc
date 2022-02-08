@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +34,7 @@ public class Factura {
 	private LocalDateTime fecha;
 
 	
-	@OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "factura", cascade = CascadeType.ALL) // fetch = FetchType.EAGER - carga a los hijos
 	private List<DetalleFactura> detalles;
 	
 	public List<DetalleFactura> getDetalles() {
@@ -42,6 +43,11 @@ public class Factura {
 
 	public void setDetalles(List<DetalleFactura> detalles) {
 		this.detalles = detalles;
+	}
+	
+	@Override
+	public String toString() {
+		return "Factura [id=" + id + ", numero=" + numero + ", cedula=" + cedula + ", fecha=" + fecha + "]";
 	}
 
 	// SET-GET

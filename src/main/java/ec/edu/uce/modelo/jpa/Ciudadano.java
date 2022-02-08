@@ -16,8 +16,8 @@ public class Ciudadano {
 
 	@Id
 	@Column(name = "ciud_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_empleado") // General el id aprtir de una secuancia
-	@SequenceGenerator(name = "seq_empleado", sequenceName = "seq_empleado", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cuidadano") // General el id aprtir de una secuancia
+	@SequenceGenerator(name = "seq_cuidadano", sequenceName = "seq_cuidadano", allocationSize = 1)
 	private Integer id;
 	
 	@Column(name = "ciud_nombre")
