@@ -45,9 +45,15 @@ public class Factura {
 		this.detalles = detalles;
 	}
 	
+//	@Override
+//	public String toString() {
+//		return "Factura [id=" + id + ", numero=" + numero + ", cedula=" + cedula + ", fecha=" + fecha + "]";
+//	}
+	
 	@Override
 	public String toString() {
-		return "Factura [id=" + id + ", numero=" + numero + ", cedula=" + cedula + ", fecha=" + fecha + "]";
+		return "Factura [id=" + id + ", numero=" + numero + ", cedula=" + cedula + ", fecha=" + fecha + ", detalles="
+				+ detalles + "]";
 	}
 
 	// SET-GET

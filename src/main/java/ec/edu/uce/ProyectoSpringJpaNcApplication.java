@@ -17,13 +17,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ec.edu.uce.modelo.Paciente;
 import ec.edu.uce.modelo.Receta;
 import ec.edu.uce.modelo.jpa.Ciudadano;
+import ec.edu.uce.modelo.jpa.Cliente;
 import ec.edu.uce.modelo.jpa.DetalleFactura;
 import ec.edu.uce.modelo.jpa.Empleado;
 import ec.edu.uce.modelo.jpa.Factura;
+import ec.edu.uce.modelo.jpa.FacturaSencilla;
 import ec.edu.uce.modelo.jpa.Guardia;
 import ec.edu.uce.repository.jpa.ICiudadanoRepo;
 import ec.edu.uce.repository.jpa.IEmpleadoRepo;
 import ec.edu.uce.service.GestorCitaServiceImpl;
+import ec.edu.uce.service.IClienteServi;
+import ec.edu.uce.service.IDetalleFacturaServi;
 import ec.edu.uce.service.IFacturaService;
 import ec.edu.uce.service.IGestorCitaService;
 import ec.edu.uce.service.IGuardiaService;
@@ -51,6 +55,12 @@ public class ProyectoSpringJpaNcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private IEmpleadoRepo empleadoRepo;
+	
+	@Autowired
+	private IDetalleFacturaServi detalleFacturaServi;
+	
+	@Autowired
+	private IClienteServi clienteServi;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoSpringJpaNcApplication.class, args);
@@ -177,14 +187,49 @@ public class ProyectoSpringJpaNcApplication implements CommandLineRunner {
 //		ciudadano.setEmpleado(empleado);
 //		
 //		this.ciudadanoRepo.insertarCiudadano(ciudadano);
+//	
+//		List<Factura> listaFactura = this.facturaService.buscarPorFechaJOIN(LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));
+//	
+//		List<Factura> listaFacturaL = this.facturaService.buscarPorFechaJOINLEFT(LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));	
+//		
+//		List<Factura> listaFacturaW = this.facturaService.buscarPorFechaWHERE(LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));	
+//		
+//		for(Factura factura : listaFactura) {
+//			LOG.info(factura.toString());
+//		}
+//		
+//		for(Factura factura : listaFacturaL) {
+//			LOG.info(factura.toString());
+//		}
+//		
+//		for(Factura factura : listaFacturaW) {
+//			LOG.info(factura.toString());
+//		}
+//		
+		List<Factura> listaFacturaJF = this.facturaService.buscarPorFechaJOINFETCH(LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));
 	
-		List<Factura> listaFactura = this.facturaService.buscarPorFechaJOIN(LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));
-	
-		List<Factura> listaFacturaL = this.facturaService.buscarPorFechaJOINLEFT(LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));	
+		for(Factura factura : listaFacturaJF) {
+			LOG.info(factura.toString());
+		}
+//		
+//		List<DetalleFactura> listaDetalles = this.detalleFacturaServi.buscarProductos(new BigDecimal(100.0), LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));
+//	
+//		for(DetalleFactura factura : listaDetalles) {
+//			LOG.info(factura.toString());
+//		}
+//		
+//		Cliente cliente = new Cliente();
+//		cliente.setNombre("Nicolas");
+//		
+//		List<String> numeros = new ArrayList<String>();
+//		numeros.add("096363564");
+//		numeros.add("091234567");
+//		
+//		cliente.setTelefonos(numeros);
 		
-		List<Factura> listaFacturaW = this.facturaService.buscarPorFechaWHERE(LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));	
+		List<FacturaSencilla> lista = this.facturaService.buscarPorFechaSencilla(LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));
 		
-		for(Factura factura : listaFacturaW) {
+		for(FacturaSencilla factura : lista) {
 			LOG.info(factura.toString());
 		}
 	}

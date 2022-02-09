@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import ec.edu.uce.ProyectoSpringJpaNcApplication;
 import ec.edu.uce.modelo.jpa.Factura;
+import ec.edu.uce.modelo.jpa.FacturaSencilla;
 
 // Existe una coneccion prestablecida con la base de datos
 @Repository
@@ -62,7 +63,7 @@ public class FacturaRepoImpl implements IFacturaRepo {
 		TypedQuery<Factura> myQuery = this.entityManager.createQuery("SELECT f FROM Factura f, DetalleFactura d WHERE f = d.factura AND f.fecha <=:fecha", Factura.class);
 		myQuery.setParameter("fecha", fecha);
 		
-List<Factura> myLista = myQuery.getResultList();
+		List<Factura> myLista = myQuery.getResultList();
 		
 		// Cosnulata bajo demanda
 		LOG.info("Longuitud REPO " + myLista.size());
@@ -71,6 +72,22 @@ List<Factura> myLista = myQuery.getResultList();
 			LOG.info(factura.toString());
 		}
 		return myLista;
+	}
+
+	@Override
+	public List<Factura> buscarPorFechaJOINFETCH(LocalDateTime fecha) {
+		// TODO Auto-generated method stub
+		TypedQuery<Factura> myQuery = this.entityManager.createQuery("SELECT f FROM Factura f JOIN FETCH f.detalles d WHERE f.fecha <=:fecha", Factura.class);
+		myQuery.setParameter("fecha", fecha);
+		return myQuery.getResultList();
+	}
+
+	@Override
+	public List<FacturaSencilla> buscarPorFechaSencilla(LocalDateTime fecha) {
+		// TODO Auto-generated method stub
+		TypedQuery<FacturaSencilla> myQuery = this.entityManager.createQuery("SELECT NEW ec.edu.uce.modelo.jpa.FacturaSencilla(f.numero,f.cedula) FROM Factura f JOIN f.detalles d WHERE f.fecha <=:fecha", FacturaSencilla.class);
+		myQuery.setParameter("fecha", fecha);
+		return myQuery.getResultList();
 	}
 
 }

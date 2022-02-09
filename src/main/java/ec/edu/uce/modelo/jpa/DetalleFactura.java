@@ -32,6 +32,11 @@ public class DetalleFactura {
 	@JoinColumn(name = "fact_id")
 	private Factura factura;
 	
+	@Override
+	public String toString() {
+		return "DetalleFactura [id=" + id + ", cantidad=" + cantidad + ", precio=" + precio + "]";
+	}
+
 	// SET-GET
 	public Integer getId() {
 		return id;

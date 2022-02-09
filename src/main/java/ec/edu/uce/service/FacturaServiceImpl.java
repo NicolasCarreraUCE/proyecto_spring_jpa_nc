@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ec.edu.uce.modelo.jpa.Factura;
+import ec.edu.uce.modelo.jpa.FacturaSencilla;
 import ec.edu.uce.repository.jpa.IFacturaRepo;
 
 @Service
@@ -37,6 +38,18 @@ public class FacturaServiceImpl implements IFacturaService {
 	public List<Factura> buscarPorFechaWHERE(LocalDateTime fecha) {
 		// TODO Auto-generated method stub
 		return this.facturaRepo.buscarPorFechaWHERE(fecha);
+	}
+
+	@Override
+	public List<Factura> buscarPorFechaJOINFETCH(LocalDateTime fecha) {
+		// TODO Auto-generated method stub
+		return this.facturaRepo.buscarPorFechaJOINFETCH(fecha);
+	}
+
+	@Override
+	public List<FacturaSencilla> buscarPorFechaSencilla(LocalDateTime fecha) {
+		// TODO Auto-generated method stub
+		return this.facturaRepo.buscarPorFechaSencilla(fecha);
 	}
 
 }
