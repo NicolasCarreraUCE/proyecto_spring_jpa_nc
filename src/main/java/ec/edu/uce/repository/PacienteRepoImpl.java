@@ -32,7 +32,8 @@ public class PacienteRepoImpl implements IPacienteRepo{
 		Object[] datosABuscar = new Object[] {
 				id
 		};
-		return this.jdbcTemplate.queryForObject("select * from paciente where id=?", datosABuscar, new BeanPropertyRowMapper<Paciente>(Paciente.class));
+		return this.jdbcTemplate.queryForObject("select * from paciente where id=?", datosABuscar,
+				new BeanPropertyRowMapper<Paciente>(Paciente.class));
 	}
 
 	@Override

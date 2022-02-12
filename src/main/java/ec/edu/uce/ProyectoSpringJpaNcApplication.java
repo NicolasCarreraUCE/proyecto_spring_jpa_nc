@@ -16,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import ec.edu.uce.modelo.Paciente;
 import ec.edu.uce.modelo.Receta;
+import ec.edu.uce.modelo.Turista;
 import ec.edu.uce.modelo.jpa.Ciudadano;
 import ec.edu.uce.modelo.jpa.Cliente;
 import ec.edu.uce.modelo.jpa.DetalleFactura;
@@ -32,6 +33,7 @@ import ec.edu.uce.service.IFacturaService;
 import ec.edu.uce.service.IGestorCitaService;
 import ec.edu.uce.service.IGuardiaService;
 import ec.edu.uce.service.IPacienteService;
+import ec.edu.uce.service.ITuristaService;
 
 @SpringBootApplication
 public class ProyectoSpringJpaNcApplication implements CommandLineRunner {
@@ -61,6 +63,8 @@ public class ProyectoSpringJpaNcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private IClienteServi clienteServi;
+	
+	@Autowired ITuristaService turistaService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoSpringJpaNcApplication.class, args);
@@ -206,11 +210,11 @@ public class ProyectoSpringJpaNcApplication implements CommandLineRunner {
 //			LOG.info(factura.toString());
 //		}
 //		
-		List<Factura> listaFacturaJF = this.facturaService.buscarPorFechaJOINFETCH(LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));
-	
-		for(Factura factura : listaFacturaJF) {
-			LOG.info(factura.toString());
-		}
+//		List<Factura> listaFacturaJF = this.facturaService.buscarPorFechaJOINFETCH(LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));
+//	
+//		for(Factura factura : listaFacturaJF) {
+//			LOG.info(factura.toString());
+//		}
 //		
 //		List<DetalleFactura> listaDetalles = this.detalleFacturaServi.buscarProductos(new BigDecimal(100.0), LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));
 //	
@@ -226,11 +230,33 @@ public class ProyectoSpringJpaNcApplication implements CommandLineRunner {
 //		numeros.add("091234567");
 //		
 //		cliente.setTelefonos(numeros);
+//		
+//		List<FacturaSencilla> lista = this.facturaService.buscarPorFechaSencilla(LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));
+//		
+//		for(FacturaSencilla factura : lista) {
+//			LOG.info(factura.toString());
+//		}
 		
-		List<FacturaSencilla> lista = this.facturaService.buscarPorFechaSencilla(LocalDateTime.of(1989,  Month.AUGUST, 8, 12, 45));
 		
-		for(FacturaSencilla factura : lista) {
-			LOG.info(factura.toString());
+		Turista t1 = new Turista();
+		t1.setNombre("Turista 1");
+		t1.setValor(new BigDecimal("30"));
+		t1.setAbono(new BigDecimal("10"));
+		
+		this.turistaService.guardarTurista(t1);
+		
+		Turista t2 = new Turista();
+		t2.setNombre("Turista 2");
+		t2.setValor(new BigDecimal("50"));
+		t2.setAbono(new BigDecimal("25"));
+		
+		this.turistaService.guardarTurista(t2);
+		
+		List<Turista> listaCalcualda = this.turistaService.obtenerTodosTuristas();
+		
+		for(Turista turista : listaCalcualda) {
+			LOG.info(turista.toString());
+			LOG.info("SALDO: " + turista.getSaldo());
 		}
 	}
 
