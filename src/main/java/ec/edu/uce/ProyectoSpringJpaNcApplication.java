@@ -264,22 +264,24 @@ public class ProyectoSpringJpaNcApplication implements CommandLineRunner {
 //			LOG.info(turista.toString());
 //			LOG.info("SALDO: " + turista.getSaldo());
 //		}
+//		
+//		CuentaBancaria cb1 = new CuentaBancaria();
+//		cb1.setNumero("1234");
+//		cb1.setClienteCedula("1712345678");
+//		cb1.setSaldo(new BigDecimal("100"));
+//		cb1.setTipo("Ahorros");
+//		
+//		this.cuentaBancariaServi.insertarCuentaBancaria(cb1);
+//		
+//		CuentaBancaria cb2 = new CuentaBancaria();
+//		cb2.setNumero("5678");
+//		cb2.setClienteCedula("1709876543");
+//		cb2.setSaldo(new BigDecimal("500"));
+//		cb2.setTipo("Ahorros");
+//
+//		this.cuentaBancariaServi.insertarCuentaBancaria(cb2);
 		
-		CuentaBancaria cb1 = new CuentaBancaria();
-		cb1.setNumero("1234");
-		cb1.setClienteCedula("1712345678");
-		cb1.setSaldo(new BigDecimal("100"));
-		cb1.setTipo("Ahorros");
-		
-		this.cuentaBancariaServi.insertarCuentaBancaria(cb1);
-		
-		CuentaBancaria cb2 = new CuentaBancaria();
-		cb2.setNumero("5678");
-		cb2.setClienteCedula("1709876543");
-		cb2.setSaldo(new BigDecimal("500"));
-		cb2.setTipo("Ahorros");
-
-		this.cuentaBancariaServi.insertarCuentaBancaria(cb2);
+		this.cuentaBancariaServi.realizarTransferencia("1234", "5678", new BigDecimal("10"));
 		
 	}
 
