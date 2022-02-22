@@ -19,6 +19,7 @@ import ec.edu.uce.modelo.Receta;
 import ec.edu.uce.modelo.Turista;
 import ec.edu.uce.modelo.jpa.Ciudadano;
 import ec.edu.uce.modelo.jpa.Cliente;
+import ec.edu.uce.modelo.jpa.CuentaBancaria;
 import ec.edu.uce.modelo.jpa.DetalleFactura;
 import ec.edu.uce.modelo.jpa.Empleado;
 import ec.edu.uce.modelo.jpa.Factura;
@@ -28,6 +29,7 @@ import ec.edu.uce.repository.jpa.ICiudadanoRepo;
 import ec.edu.uce.repository.jpa.IEmpleadoRepo;
 import ec.edu.uce.service.GestorCitaServiceImpl;
 import ec.edu.uce.service.IClienteServi;
+import ec.edu.uce.service.ICuentaBancariaServi;
 import ec.edu.uce.service.IDetalleFacturaServi;
 import ec.edu.uce.service.IFacturaService;
 import ec.edu.uce.service.IGestorCitaService;
@@ -64,7 +66,11 @@ public class ProyectoSpringJpaNcApplication implements CommandLineRunner {
 	@Autowired
 	private IClienteServi clienteServi;
 	
-	@Autowired ITuristaService turistaService;
+	@Autowired 
+	private ITuristaService turistaService;
+	
+	@Autowired
+	private ICuentaBancariaServi cuentaBancariaServi;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoSpringJpaNcApplication.class, args);
@@ -236,28 +242,45 @@ public class ProyectoSpringJpaNcApplication implements CommandLineRunner {
 //		for(FacturaSencilla factura : lista) {
 //			LOG.info(factura.toString());
 //		}
+//		
+//		
+//		Turista t1 = new Turista();
+//		t1.setNombre("Turista 1");
+//		t1.setValor(new BigDecimal("30"));
+//		t1.setAbono(new BigDecimal("10"));
+//		
+//		this.turistaService.guardarTurista(t1);
+//		
+//		Turista t2 = new Turista();
+//		t2.setNombre("Turista 2");
+//		t2.setValor(new BigDecimal("50"));
+//		t2.setAbono(new BigDecimal("25"));
+//		
+//		this.turistaService.guardarTurista(t2);
+//		
+//		List<Turista> listaCalcualda = this.turistaService.obtenerTodosTuristas();
+//		
+//		for(Turista turista : listaCalcualda) {
+//			LOG.info(turista.toString());
+//			LOG.info("SALDO: " + turista.getSaldo());
+//		}
 		
+		CuentaBancaria cb1 = new CuentaBancaria();
+		cb1.setNumero("1234");
+		cb1.setClienteCedula("1712345678");
+		cb1.setSaldo(new BigDecimal("100"));
+		cb1.setTipo("Ahorros");
 		
-		Turista t1 = new Turista();
-		t1.setNombre("Turista 1");
-		t1.setValor(new BigDecimal("30"));
-		t1.setAbono(new BigDecimal("10"));
+		this.cuentaBancariaServi.insertarCuentaBancaria(cb1);
 		
-		this.turistaService.guardarTurista(t1);
+		CuentaBancaria cb2 = new CuentaBancaria();
+		cb2.setNumero("5678");
+		cb2.setClienteCedula("1709876543");
+		cb2.setSaldo(new BigDecimal("500"));
+		cb2.setTipo("Ahorros");
+
+		this.cuentaBancariaServi.insertarCuentaBancaria(cb2);
 		
-		Turista t2 = new Turista();
-		t2.setNombre("Turista 2");
-		t2.setValor(new BigDecimal("50"));
-		t2.setAbono(new BigDecimal("25"));
-		
-		this.turistaService.guardarTurista(t2);
-		
-		List<Turista> listaCalcualda = this.turistaService.obtenerTodosTuristas();
-		
-		for(Turista turista : listaCalcualda) {
-			LOG.info(turista.toString());
-			LOG.info("SALDO: " + turista.getSaldo());
-		}
 	}
 
 }
