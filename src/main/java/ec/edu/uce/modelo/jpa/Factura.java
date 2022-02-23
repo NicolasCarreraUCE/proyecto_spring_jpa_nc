@@ -32,7 +32,6 @@ public class Factura {
 	
 	@Column(name = "fact_fecha", columnDefinition = "TIMESTAMP") // Maneja la fecha y las horas
 	private LocalDateTime fecha;
-
 	
 	@OneToMany(mappedBy = "factura", cascade = CascadeType.ALL) // fetch = FetchType.EAGER - carga a los hijos
 	private List<DetalleFactura> detalles;

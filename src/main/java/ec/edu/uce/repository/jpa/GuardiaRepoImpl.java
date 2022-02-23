@@ -1,7 +1,5 @@
 package ec.edu.uce.repository.jpa;
 
-import java.util.function.Predicate;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;

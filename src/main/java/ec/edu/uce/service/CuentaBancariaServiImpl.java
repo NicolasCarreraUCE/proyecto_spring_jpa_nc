@@ -34,6 +34,12 @@ public class CuentaBancariaServiImpl implements ICuentaBancariaServi {
 	}
 
 	@Override
+	public void actualizarCuentaBancaria2(CuentaBancaria cuentaBancaria) {
+		// TODO Auto-generated method stub
+		this.cuentaBancariaRepo.actualizarCuentaBancaria2(cuentaBancaria);
+	}
+	
+	@Override
 	public CuentaBancaria buscarPorNumero(String numero) {
 		// TODO Auto-generated method stub
 		return this.cuentaBancariaRepo.buscarPorNumero(numero);
@@ -43,21 +49,29 @@ public class CuentaBancariaServiImpl implements ICuentaBancariaServi {
 	@Transactional
 	public void realizarTransferencia(String cuentaOrigen, String cuentaDestino, BigDecimal valorTransferir) {
 		// TODO Auto-generated method stub
+		
+		CuentaBancaria cbOrigen = this.buscarPorNumero(cuentaOrigen);
+		CuentaBancaria cbDestino = this.buscarPorNumero(cuentaDestino);
+		
+		cbOrigen.setSaldo(cbOrigen.getSaldo().subtract(valorTransferir));
+		cbDestino.setSaldo(cbDestino.getSaldo().add(valorTransferir));
+		
+		//this.actualizarCuentaBancaria(cbOrigen);
+		//this.actualizarCuentaBancaria(cbDestino);
+		
+		// La Transaction debe enterarse de que exista una Exception
+		
+		LOG.info("AA1");
+		this.cuentaBancariaRepo.actualizarCuentaBancaria(cbOrigen);
+		LOG.info("DA1");
+		
+		LOG.info("AA2");
 		try {
-			CuentaBancaria cbOrigen = this.buscarPorNumero(cuentaOrigen);
-			CuentaBancaria cbDestino = this.buscarPorNumero(cuentaDestino);
-			
-			cbOrigen.setSaldo(cbOrigen.getSaldo().subtract(valorTransferir));
-			cbDestino.setSaldo(cbDestino.getSaldo().add(valorTransferir));
-			
-			this.actualizarCuentaBancaria(cbOrigen);
-			this.actualizarCuentaBancaria(cbDestino);
-			
-			throw new Exception();
-			
-		} catch (Exception e) {
+			this.cuentaBancariaRepo.actualizarCuentaBancaria2(cbDestino);
+		} catch (ArrayIndexOutOfBoundsException e) {
 			// TODO: handle exception
-			LOG.error("Se produjo un error se va a ejecutar un ROLLBACK");
+			LOG.error("ERROR PROPAGADO");
 		}
+		LOG.info("DA2");
 	}
 }
