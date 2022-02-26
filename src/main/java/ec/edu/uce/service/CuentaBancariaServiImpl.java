@@ -3,6 +3,7 @@ package ec.edu.uce.service;
 import java.math.BigDecimal;
 
 import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,7 @@ public class CuentaBancariaServiImpl implements ICuentaBancariaServi {
 	}
 	
 	@Override
+	@Transactional(value = TxType.NOT_SUPPORTED)
 	public CuentaBancaria buscarPorNumero(String numero) {
 		// TODO Auto-generated method stub
 		return this.cuentaBancariaRepo.buscarPorNumero(numero);
@@ -62,7 +64,12 @@ public class CuentaBancariaServiImpl implements ICuentaBancariaServi {
 		// La Transaction debe enterarse de que exista una Exception
 		
 		LOG.info("AA1");
-		this.cuentaBancariaRepo.actualizarCuentaBancaria(cbOrigen);
+		try {
+			this.cuentaBancariaRepo.actualizarCuentaBancaria(cbOrigen);	
+		} catch (ArrayIndexOutOfBoundsException e) {
+			// TODO: handle exception
+			LOG.error("ERROR PROPAGADO");
+		}
 		LOG.info("DA1");
 		
 		LOG.info("AA2");
