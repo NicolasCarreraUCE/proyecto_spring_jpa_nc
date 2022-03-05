@@ -280,9 +280,16 @@ public class ProyectoSpringJpaNcApplication implements CommandLineRunner {
 //		cb2.setTipo("Ahorros");
 //
 //		this.cuentaBancariaServi.insertarCuentaBancaria(cb2);
-		
-		this.cuentaBancariaServi.realizarTransferencia("1234", "5678", new BigDecimal("10"));
-		
+//		
+//		this.cuentaBancariaServi.realizarTransferencia("1234", "5678", new BigDecimal("10"));
+//		
+//		this.cuentaBancariaServi.propagacionMandatory();
+//		
+//		this.cuentaBancariaServi.realizarTransferenciaExpresInicial("1234", "5678", new BigDecimal("10"));
+//		this.cuentaBancariaServi.realizarTransferenciaExpresInicialNoT("1234", "5678", new BigDecimal("10"));
+//	
+//		this.cuentaBancariaServi.enviarEmail();
+		this.cuentaBancariaServi.enviarEmailNoT();
 	}
 
 }

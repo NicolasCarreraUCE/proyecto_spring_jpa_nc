@@ -10,4 +10,15 @@ public interface ICuentaBancariaServi {
 	void actualizarCuentaBancaria2(CuentaBancaria cuentaBancaria);
 	CuentaBancaria buscarPorNumero(String numero);
 	void realizarTransferencia(String cuentaOrigen, String cuentaDestino, BigDecimal valorTransferir);
+
+	void realizarTransferenciaExpresInicial(String cuentaOrigen, String cuentaDestino, BigDecimal valorTransferir);
+
+	void realizarTransferenciaExpresInicialNoT(String cuentaOrigen, String cuentaDestino, BigDecimal valorTransferir);
+	
+	void realizarTransferenciaExpres(String cuentaOrigen, String cuentaDestino, BigDecimal valorTransferir);
+	
+	void propagacionMandatory();
+	
+	void enviarEmail();
+	void enviarEmailNoT();
 }

@@ -64,21 +64,78 @@ public class CuentaBancariaServiImpl implements ICuentaBancariaServi {
 		// La Transaction debe enterarse de que exista una Exception
 		
 		LOG.info("AA1");
-		try {
+//		try {
 			this.cuentaBancariaRepo.actualizarCuentaBancaria(cbOrigen);	
-		} catch (ArrayIndexOutOfBoundsException e) {
-			// TODO: handle exception
-			LOG.error("ERROR PROPAGADO");
-		}
+//		} catch (ArrayIndexOutOfBoundsException e) {
+//			// TODO: handle exception
+//			LOG.error("ERROR PROPAGADO");
+//		}
 		LOG.info("DA1");
 		
 		LOG.info("AA2");
-		try {
-			this.cuentaBancariaRepo.actualizarCuentaBancaria2(cbDestino);
-		} catch (ArrayIndexOutOfBoundsException e) {
-			// TODO: handle exception
-			LOG.error("ERROR PROPAGADO");
-		}
+//		try {
+			this.cuentaBancariaRepo.actualizarCuentaBancaria(cbDestino);
+//		} catch (ArrayIndexOutOfBoundsException e) {
+//			// TODO: handle exception
+//			LOG.error("ERROR PROPAGADO");
+//		}
 		LOG.info("DA2");
+	}
+	
+	@Override
+	@Transactional
+	public void realizarTransferenciaExpresInicial(String cuentaOrigen, String cuentaDestino, BigDecimal valorTransferir) {
+		// TODO Auto-generated method stub
+		this.realizarTransferenciaExpres(cuentaOrigen, cuentaDestino, valorTransferir);
+	}
+	
+	/**
+	 * Segundo esenario
+	 * Este metodo no pose @Transactional 
+	 * @param cuentaOrigen
+	 * @param cuentaDestino
+	 * @param valorTransferir
+	 */
+	@Override
+	public void realizarTransferenciaExpresInicialNoT(String cuentaOrigen, String cuentaDestino, BigDecimal valorTransferir) {
+		// TODO Auto-generated method stub
+		this.realizarTransferenciaExpres(cuentaOrigen, cuentaDestino, valorTransferir);
+	}
+	
+	@Override
+	@Transactional(value = TxType.SUPPORTS)
+//	@Transactional(value = TxType.REQUIRES_NEW)
+	public void realizarTransferenciaExpres(String cuentaOrigen, String cuentaDestino, BigDecimal valorTransferir) {
+		// TODO Auto-generated method stub
+		LOG.info("EJECUCION SUPPORTS");
+		CuentaBancaria cbOrigen = this.buscarPorNumero(cuentaOrigen);
+		CuentaBancaria cbDestino = this.buscarPorNumero(cuentaDestino);
+		
+		cbOrigen.setSaldo(cbOrigen.getSaldo().subtract(valorTransferir));
+		cbDestino.setSaldo(cbDestino.getSaldo().add(valorTransferir));
+		
+		LOG.info("SUPPORTS ANTES");
+		this.cuentaBancariaRepo.actualizarCuentaBancaria(cbOrigen);	
+		this.cuentaBancariaRepo.actualizarCuentaBancaria(cbDestino);
+	}
+	
+	@Transactional
+	public void enviarEmail() {
+		this.cuentaBancariaRepo.enviarMail("Correo de clases");
+	}
+	
+	public void enviarEmailNoT() {
+		this.cuentaBancariaRepo.enviarMail("Correo de clases NoT");
+	}
+	
+	@Transactional(value = TxType.SUPPORTS)
+	public void propagacionSupports() {
+		
+	}
+	
+	@Override
+	@Transactional(value = TxType.MANDATORY)
+	public void propagacionMandatory() {
+		LOG.info("EJECUCION MANDATORY");
 	}
 }
