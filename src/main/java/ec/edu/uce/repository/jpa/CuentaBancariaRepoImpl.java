@@ -9,6 +9,7 @@ import javax.transaction.Transactional.TxType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 
 import ch.qos.logback.core.subst.Token.Type;
 import ec.edu.uce.modelo.jpa.CuentaBancaria;
@@ -29,7 +30,8 @@ public class CuentaBancariaRepoImpl implements ICuentaBancariaRepo {
 	}
 
 	@Override
-	@Transactional(value = TxType.MANDATORY)
+//	@Transactional(value = TxType.MANDATORY)
+	@org.springframework.transaction.annotation.Transactional(propagation = Propagation.MANDATORY)
 	public void actualizarCuentaBancaria(CuentaBancaria cuentaBancaria) {
 		// TODO Auto-generated method stub
 		this.entityManager.merge(cuentaBancaria);
@@ -43,7 +45,8 @@ public class CuentaBancariaRepoImpl implements ICuentaBancariaRepo {
 	}
 	
 	@Override
-	@Transactional(value = TxType.REQUIRES_NEW)
+//	@Transactional(value = TxType.REQUIRES_NEW)
+	@org.springframework.transaction.annotation.Transactional(propagation = Propagation.MANDATORY)
 	public void actualizarCuentaBancaria2(CuentaBancaria cuentaBancaria) {
 		// TODO Auto-generated method stub
 		this.entityManager.merge(cuentaBancaria);

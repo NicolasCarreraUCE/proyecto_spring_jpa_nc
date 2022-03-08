@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 
 import ec.edu.uce.modelo.jpa.CuentaBancaria;
 import ec.edu.uce.repository.jpa.FacturaRepoImpl;
@@ -103,11 +104,13 @@ public class CuentaBancariaServiImpl implements ICuentaBancariaServi {
 	}
 	
 	@Override
-	@Transactional(value = TxType.SUPPORTS)
+//	@Transactional(value = TxType.SUPPORTS)
+	@org.springframework.transaction.annotation.Transactional(propagation = Propagation.REQUIRES_NEW)
 //	@Transactional(value = TxType.REQUIRES_NEW)
 	public void realizarTransferenciaExpres(String cuentaOrigen, String cuentaDestino, BigDecimal valorTransferir) {
 		// TODO Auto-generated method stub
 		LOG.info("EJECUCION SUPPORTS");
+		LOG.info("Prueba 2:");
 		CuentaBancaria cbOrigen = this.buscarPorNumero(cuentaOrigen);
 		CuentaBancaria cbDestino = this.buscarPorNumero(cuentaDestino);
 		

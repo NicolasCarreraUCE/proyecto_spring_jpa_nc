@@ -14,6 +14,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import ec.edu.uce.interfaces.funcionales.IPersonaFunction;
+import ec.edu.uce.interfaces.funcionales.IPersonaUnaryOperator;
 import ec.edu.uce.modelo.Paciente;
 import ec.edu.uce.modelo.Receta;
 import ec.edu.uce.modelo.Turista;
@@ -27,6 +29,7 @@ import ec.edu.uce.modelo.jpa.FacturaSencilla;
 import ec.edu.uce.modelo.jpa.Guardia;
 import ec.edu.uce.repository.jpa.ICiudadanoRepo;
 import ec.edu.uce.repository.jpa.IEmpleadoRepo;
+import ec.edu.uce.service.CuentaBancariaFachadaServiImpl;
 import ec.edu.uce.service.GestorCitaServiceImpl;
 import ec.edu.uce.service.IClienteServi;
 import ec.edu.uce.service.ICuentaBancariaServi;
@@ -71,6 +74,15 @@ public class ProyectoSpringJpaNcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private ICuentaBancariaServi cuentaBancariaServi;
+	
+//	@Autowired
+	private IPersonaUnaryOperator<String> personaUnaryOperator;
+	
+//	@Autowired
+	private IPersonaFunction<String, Paciente> personaFunction;
+	
+//	@Autowired
+	private CuentaBancariaFachadaServiImpl cuanBancariaFachadaSevi;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoSpringJpaNcApplication.class, args);
@@ -289,7 +301,11 @@ public class ProyectoSpringJpaNcApplication implements CommandLineRunner {
 //		this.cuentaBancariaServi.realizarTransferenciaExpresInicialNoT("1234", "5678", new BigDecimal("10"));
 //	
 //		this.cuentaBancariaServi.enviarEmail();
-		this.cuentaBancariaServi.enviarEmailNoT();
+//		this.cuentaBancariaServi.enviarEmailNoT();
+//		
+//		this.personaUnaryOperator.apply("A");
+//		this.personaFunction.apply("B");
+		this.cuanBancariaFachadaSevi.realizarTransferenciaExpressInicialNoT("1234", "5678", new BigDecimal("10"));
 	}
 
 }
